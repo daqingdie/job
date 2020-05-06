@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" 
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd 
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!--使用mvc:annotation-driven可以代替上面的映射器和适配器
+		这里面会默认加载很多参数绑定方法，比如json转换解析器就默认加载，所以优先使用下面的配置
+	  -->
+	<mvc:annotation-driven></mvc:annotation-driven>
+
+	
+	<!--批量配置Handler,指定扫描的包全称  -->
+	<context:component-scan base-package="com.lq.controller"></context:component-scan>
+	
+
+	<!--配置视图解析器  -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		
+	</bean>
+	
+	<!-- 配置静态文件过滤器 -->
+    <mvc:resources location="/bootstrap/" mapping="/bootstrap/**"/>
+    <mvc:resources location="/js/" mapping="/js/**"/>
+    <mvc:resources location="/fonts/" mapping="/fonts/**"/>
+    <mvc:resources location="/css/" mapping="/css/**"/>
+    <mvc:resources location="/images/" mapping="/images/**"/>
+    <mvc:resources location="/assets/" mapping="/assets/**"/>
+    <mvc:resources location="/assets2/" mapping="/assets2/**"/>
+    
+    
+    <mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>
+     
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <!-- 自定义转换器的类名 -->
+            <bean class="com.lq.util.DateConverter"></bean>
+        </property>
+    </bean>
+    
+    <bean id="viewResolver"
+class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+       <!-- 定义视图存放路径 -->
+       <property name="prefix" value="/WEB-INF/content/"></property>
+       <!-- 定义视图后缀 -->
+       <property name="suffix" value=".jsp"></property>
+</bean>
+</beans>

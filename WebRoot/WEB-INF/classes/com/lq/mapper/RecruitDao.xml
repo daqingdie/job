@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper   PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">  
+
+<!-- namespace表示命名空间 -->
+<mapper namespace="com.lq.mapper.RecruitDao">
+<!-- 注册 -->
+<insert id="registerRec" parameterType="USERRec">
+         insert into user_recruit (ur_code,ur_password)
+        values (#{ur_code},#{ur_password})
+    </insert>
+<!-- 登录 -->
+<select id="loginRec" resultType="USERRec">
+		select ur_code,ur_password from user_recruit where ur_code=#{ur_code} and ur_password=#{ur_password}
+	</select>
+<!-- 查询全部 -->
+<select id="findallRec" resultType="Rec">
+	SELECT * FROM rj_recruit
+</select>
+<!-- 查询 -->
+<select id="findRecById" resultType="Rec">
+	SELECT * FROM rj_recruit WHERE rec_id = #{rec_id}
+</select>
+<!-- 模糊查询 -->
+<select id="mohufind" resultType="Rec">
+	SELECT * FROM rj_recruit WHERE rec_name like concat('%',#{value},'%')
+</select>
+<!-- 插入 -->
+<insert id="saveRec" parameterType="Rec">
+    INSERT into rj_recruit(rec_id,rec_name,rec_number,rec_sex,rec_describe,rec_city,rec_pay) values(#{rec_id},#{rec_name},#{rec_number},#{rec_sex},#{rec_describe},#{rec_city},#{rec_pay})
+</insert>
+<!-- 找要更新的id -->
+<select id="findupdate" resultType="Rec">
+	SELECT * FROM rj_recruit WHERE rec_id = #{rec_id}
+</select>
+<!-- 更新 -->
+<update id="updateRec" parameterType="Rec">
+    	    update rj_recruit
+	    <set>
+	        <if test="rec_name!=null">
+	            rec_name=#{rec_name},
+	        </if>
+	        <if test="rec_number!=null">
+	            rec_number=#{rec_number},
+	        </if>
+	        <if test="rec_sex!=null">
+	            rec_sex=#{rec_sex},
+	        </if>
+	        <if test="rec_describe!=null">
+	            rec_describe=#{rec_describe},
+	        </if>
+	        <if test="rec_city!=null">
+	            rec_city=#{rec_city},
+	        </if>
+	        <if test="rec_pay!=null">
+	            rec_pay=#{rec_pay},
+	        </if>
+	    </set>
+	    where rec_id=#{rec_id}
+</update>
+<!-- 删除 -->
+<delete id="deleteRecById" parameterType="Rec">
+    DELETE FROM rj_recruit WHERE rec_id = #{rec_id}
+</delete>
+<!-- 分页SQL语句 --> 
+    <select id="selectRecByPage" resultType="Rec"> 
+        select * 
+        from rj_recruit limit #{startPos},#{pageSize}  
+    </select> 
+<!-- 取得记录的总数 --> 
+<select id="getRecCount" resultType="long">
+        SELECT COUNT(*) FROM rj_recruit  
+</select>
+<!-- 插入 -->
+<insert id="RecandJob" parameterType="RJ">
+    INSERT into rec_job(rj_id,rec_id,job_id) values(#{rj_id},#{rec_id},#{job_id})
+</insert>
+<!-- 应聘情况 -->
+<select id="findRJById" resultType="map">
+	select * FROM rj_view WHERE rec_id = #{rec_id}
+</select>
+<!-- 分页SQL语句 --> 
+    <select id="findRJByPage" resultType="map"> 
+        select * 
+        from rj_view  WHERE rec_id = #{rec_id} limit #{startPos},#{pageSize}
+    </select> 
+<!-- 取得记录的总数 --> 
+<select id="getRJCount()" resultType="long">
+        SELECT COUNT(*) FROM rj_view
+</select>
+</mapper>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lq.mapper.NewsMapper" >
+  <resultMap id="BaseResultMap" type="com.lq.po.News" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sName" property="sname" jdbcType="VARCHAR" />
+    <result column="rName" property="rname" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="message" property="message" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sName, rName, title, message, time, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from news
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from news
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lq.po.News" >
+    insert into news (id, sName, rName, 
+      title, message, time, 
+      status)
+    values (#{id,jdbcType=INTEGER}, #{sname,jdbcType=VARCHAR}, #{rname,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lq.po.News" >
+    insert into news
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sname != null" >
+        sName,
+      </if>
+      <if test="rname != null" >
+        rName,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="message != null" >
+        message,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sname != null" >
+        #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="rname != null" >
+        #{rname,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null" >
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lq.po.News" >
+    update news
+    <set >
+      <if test="sname != null" >
+        sName = #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="rname != null" >
+        rName = #{rname,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null" >
+        message = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lq.po.News" >
+    update news
+    set sName = #{sname,jdbcType=VARCHAR},
+      rName = #{rname,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      message = #{message,jdbcType=VARCHAR},
+      time = #{time,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+   <!-- 通过收件人查询News -->
+  <select id="selectByRname" resultType="com.lq.po.News" parameterType="java.lang.String">
+  	select * from news where rName = #{rName,jdbcType=VARCHAR}
+  </select>
+  
+   <!-- 通过发件人查询News -->
+  <select id="selectBySname" resultType="com.lq.po.News" parameterType="java.lang.String">
+  	select * from news where sName = #{sName,jdbcType=VARCHAR}
+  </select>
+  
+  
+</mapper>

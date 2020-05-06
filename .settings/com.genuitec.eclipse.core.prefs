@@ -1,0 +1,4 @@
+eclipse.preferences.version=1
+validator.Checked=WebRoot/assets2/js/charts/echarts.min.js,WebRoot/assets2/js/app.js,WebRoot/assets2/js/amazeui.min.js,WebRoot/assets/js/amazeui.min.js,WebRoot/js/plugins/moment.min.js,WebRoot/js/jquery-3.3.1.min.js,WebRoot/assets/js/charts/echarts.min.js,WebRoot/js/plugins/jquery.vmap.min.js,WebRoot/assets/js/jquery-1.11.1.min.js,WebRoot/assets/js/app.js,WebRoot/js/jquery-3.2.1.min.js,WebRoot/js/popper.min.js,WebRoot/js/jquery-v1.11.3.js
+validator.Revalidate=true
+validator.Unchecked=

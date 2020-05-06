@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lq.mapper.EvaluateMapper" >
+  <resultMap id="BaseResultMap" type="com.lq.po.Evaluate" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sName" property="sname" jdbcType="VARCHAR" />
+    <result column="rName" property="rname" jdbcType="VARCHAR" />
+    <result column="message" property="message" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sName, rName, message, status, time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from evaluate
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from evaluate
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lq.po.Evaluate" >
+    insert into evaluate (id, sName, rName, 
+      message, status, time
+      )
+    values (#{id,jdbcType=INTEGER}, #{sname,jdbcType=VARCHAR}, #{rname,jdbcType=VARCHAR}, 
+      #{message,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lq.po.Evaluate" >
+    insert into evaluate
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sname != null" >
+        sName,
+      </if>
+      <if test="rname != null" >
+        rName,
+      </if>
+      <if test="message != null" >
+        message,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sname != null" >
+        #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="rname != null" >
+        #{rname,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null" >
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lq.po.Evaluate" >
+    update evaluate
+    <set >
+      <if test="sname != null" >
+        sName = #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="rname != null" >
+        rName = #{rname,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null" >
+        message = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lq.po.Evaluate" >
+    update evaluate
+    set sName = #{sname,jdbcType=VARCHAR},
+      rName = #{rname,jdbcType=VARCHAR},
+      message = #{message,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      time = #{time,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 查询有关一个用户的所有评价 -->
+  <select id="selectByName" resultType="com.lq.po.Evaluate" parameterType="java.lang.String">
+  	select * from evaluate where rName = #{name,jdbcType=VARCHAR} or sName=#{name,jdbcType=VARCHAR} 
+  </select>
+  
+  <!-- 查询所有评价 -->
+  	<select id="selectAll" resultType="com.lq.po.Evaluate" >
+  	select * from evaluate 
+  </select>
+ 
+</mapper>

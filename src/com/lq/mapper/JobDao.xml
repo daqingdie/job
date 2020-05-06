@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper   PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">  
+
+<!-- namespace表示命名空间 -->
+<mapper namespace="com.lq.mapper.JobDao">
+<!-- 注册 -->
+<insert id="registerRec" parameterType="USERRec">
+         insert into user_recruit (ur_code,ur_password)
+        values (#{ur_code},#{ur_password})
+    </insert>
+<!-- 登录 -->
+<select id="loginRec" resultType="USERRec">
+		select ur_code,ur_password from user_recruit where ur_code=#{ur_code} and ur_password=#{ur_password}
+	</select>
+<!-- 查询全部 -->
+<select id="findallJob" resultType="Job">
+	SELECT * FROM rj_job
+</select>
+<!-- id查询 -->
+<select id="findjobById" resultType="Job">
+	SELECT * FROM rj_job WHERE job_id = #{job_id}
+</select>
+<!-- 模糊查询 -->
+<select id="mohufind" resultType="Job">
+	SELECT * FROM rj_job WHERE rec_name like concat('%',#{value},'%')
+</select>
+<!-- 插入 -->
+<insert id="saveJob" parameterType="Job">
+    INSERT into rj_job(job_id,job_name,job_type,job_place,job_pay,job_sex,job_birth,job_time,job_education,job_phone,job_introduce) values(#{job_id},#{job_name},#{job_type},#{job_place},#{job_pay},#{job_sex},#{job_birth},#{job_time},#{job_education},#{job_phone},#{job_introduce})
+</insert>
+<!-- 找要更新的id -->
+<select id="findupdate" resultType="Rec">
+	SELECT * FROM rj_recruit WHERE rec_id = #{rec_id}
+</select>
+<!-- 更新 -->
+<update id="updateJob" parameterType="Job">
+    	    update rj_job
+	    <set>
+	        <if test="job_name!=null">
+	            job_name=#{job_name},
+	        </if>
+	        <if test="job_type!=null">
+	            job_type=#{job_type},
+	        </if>
+	        <if test="job_place!=null">
+	            job_place=#{job_place},
+	        </if>
+	        <if test="job_sex!=null">
+	            job_sex=#{job_sex},
+	        </if>
+	        <if test="job_birth!=null">
+	            job_birth=#{job_birth},
+	        </if>
+	        <if test="job_time!=null">
+	            job_time=#{job_time},
+	        </if>
+	        <if test="job_education!=null">
+	            job_education=#{job_education},
+	        </if>
+	        <if test="job_phone!=null">
+	            job_phone=#{job_phone},
+	        </if>
+	        <if test="job_introduce!=null">
+	            job_introduce=#{job_introduce},
+	        </if>
+	    </set>
+	    where job_id=#{job_id}
+</update>
+<!-- 删除 -->
+<delete id="deleteJobById" parameterType="Job">
+    DELETE FROM rj_job WHERE job_id = #{job_id}
+</delete>
+<!-- 分页SQL语句 --> 
+    <select id="selectJobByPage" resultType="Job"> 
+        select * 
+        from rj_job limit #{startPos},#{pageSize}  
+    </select> 
+<!-- 取得记录的总数 --> 
+<select id="getJobCount" resultType="long">
+        SELECT COUNT(*) FROM rj_job  
+</select>
+</mapper>
